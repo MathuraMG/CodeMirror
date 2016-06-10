@@ -21,8 +21,13 @@
     <h1>
       Code Mirror Test
     </h1>
+    <button onClick="switchToText()">switch to text area</button>
     <script src="app.js"></script>
     <!-- To select between themes  -->
+
+    <textarea id="codemirror-test">
+      console.log('apples');
+    </textarea>
 
     <div class="ideThemeSelect">
       <label for="ideTheme">Select Theme</label>
@@ -60,7 +65,7 @@
         <option value="72px">72px</option>
       </select>
     </div>
-    
+
     <!-- <div id="noOfLines" aria-live="assertive" > no Of lines - 10 </div> -->
   </body>
 </html>
