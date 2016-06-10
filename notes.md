@@ -17,7 +17,12 @@ Can be set using inputStyle: "contenteditable"
 
 **NOTE** This causes the code not to compile completely , reverted the change for now.
 
-**TO DO** Test contenteditable against various browsers. (check for standard list in W3C)
+**TODO** Test contenteditable against various browsers. (check for standard list in W3C)
+
+**TODO**
+Test the below solution for codemirror with VO
+* https://gist.github.com/vedanshujain/ce244ac29072c267bd18
+* https://github.com/jsbin/jsbin/issues/936
 
 
 ### Including vi
