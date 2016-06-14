@@ -20,7 +20,7 @@ codeArea.addEventListener("keyup", function() {
   eval(myCodeMirror.doc.getValue());
 })
 window.onload = function(){
-  
+
   setIDETheme();
 
   //add content editable to the parent class - 'CodeMirror-lines'

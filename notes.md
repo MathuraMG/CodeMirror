@@ -19,6 +19,11 @@ Can be set using inputStyle: "contenteditable"
 
 **TO DO** Test contenteditable against various browsers. (check for standard list in W3C)
 
+**DISCUSSIONS**
+* https://github.com/mozilla/thimble.mozilla.org/issues/1470
+* https://github.com/codemirror/CodeMirror/issues/3429
+* http://forum.textadventures.co.uk/viewtopic.php?t=5319
+
 
 ### Including vi
 **DONE**
