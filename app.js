@@ -8,7 +8,7 @@ var myCodeMirror = CodeMirror(document.body, {
   autoCloseBrackets: true,
   inputStyle: "contenteditable"
 });
-
+var cm = myCodeMirror;
 // let's save this as a globally accessible variable in case we need it for more custom style functions
 var cmWrapperElement = myCodeMirror.getWrapperElement();
 
@@ -20,7 +20,7 @@ codeArea.addEventListener("keyup", function() {
   eval(myCodeMirror.doc.getValue());
 })
 window.onload = function(){
-  
+
   setIDETheme();
 
   //add content editable to the parent class - 'CodeMirror-lines'
@@ -58,3 +58,64 @@ function setIDETheme() {
   var selTheme = document.getElementById('ideTheme').value;
   myCodeMirror.setOption('theme',selTheme);
 }
+
+
+function shout(content){
+    shouter = $('#shouter')[0]
+    $(shouter).val(content)
+    console.log(content)
+}
+function shout_current_content(cm)
+{
+    setTimeout(function () {
+        content = get_current_content(cm)
+        console.log('the content is -- ');
+        console.log(content);
+        shout(content)
+    }, 1)
+}
+function get_current_content(cm)
+{
+    editor = cm.getInputField()
+    content = $(editor).val()
+    console.log(content)
+    return content
+}
+function init_Code() {
+    if($('.CodeMirror').length > 0){     //Check if codemirror is loaded or not
+        $('.CodeMirror').keydown(function(e) {
+
+            cm = myCodeMirror
+            content = get_current_content(cm)
+            if((e.keyCode >= 48 && e.keyCode <= 90) || content != "") {
+                shout_current_content(cm)
+                console.log('typing in codemirror');
+            }
+            else{
+                cursor = cm.getCursor()
+                content = cm.getLine(cursor['line'])
+                switch (e.keyCode) {
+                    case 37:
+                    case 39:
+                        content = content.substring(0, cursor['ch'])
+                        shout(content)
+                        break
+                    case 38:
+                    case 40:
+                        if (content == "") {
+                            content = "Empty Line"
+                        }
+                        shout(content)
+                        break
+                    default:
+                        shout_current_content(cm)
+                }
+            }
+        }
+        )
+    }
+    else{
+        setTimeout(init_Code, 100)
+    }
+}
+init_Code()
