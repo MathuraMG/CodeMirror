@@ -15,7 +15,8 @@ window.onload = function(){
     lineNumbers: true,
     theme: "3024-day",
     autoCloseBrackets: true,
-    inputStyle: "contenteditable"
+    inputStyle: "contenteditable",
+    lineNumberFormatter: function(line){return('<span> line </span>' + line);}
   });
 
   isTextArea = 0;
@@ -23,7 +24,8 @@ window.onload = function(){
 
   codeArea =document.getElementsByClassName('CodeMirror')[0];
   codeArea.addEventListener("keyup", function() {
-    console.log('changing the value');
+    // debugger;
+    // console.log('changing the value');
     eval(myCodeMirror.doc.getValue());
     // eval(textAreaCM.doc.getValue());
   })
@@ -32,6 +34,13 @@ window.onload = function(){
 
   //add content editable to the parent class - 'CodeMirror-lines'
   // document.getElementsByClassName('CodeMirror-lines')[0].contentEditable = true;
+
+  // var textarea = document.getElementById('codemirror-test');
+  // textarea.addEventListener('keydown',function(e){
+  //   addLineNum(e)
+  //   }
+  // );
+
 
 }
 
@@ -84,4 +93,24 @@ function switchToText() {
     isTextArea = 0;
   }
 
+}
+
+function addLineNum(e) {
+  if(e.keyCode) {
+    console.log('this is Enter');
+    var textTemp = document.getElementsByClassName('textarea')[0];
+     document.getElementById('codemirror-test').innerHTML = document.getElementById('codemirror-test').value;
+     var temp = document.getElementById('codemirror-test').innerHTML;
+     temp = temp.split('\n');
+    //  textTemp.innerHTML = '';
+     for(var i =0;i<temp.length;i++){
+       var tempLineDiv = document.createElement('div');
+       tempLineDiv.innerHTML = i+1;
+       textTemp.appendChild(tempLineDiv);
+       var tempDiv = document.createElement('div');
+       tempDiv.innerHTML = temp[i];
+       textTemp.appendChild(tempDiv);
+       tempDiv.tabIndex = 0;
+     }
+  }
 }
