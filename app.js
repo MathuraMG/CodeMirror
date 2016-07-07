@@ -16,7 +16,9 @@ window.onload = function(){
     theme: "3024-day",
     autoCloseBrackets: true,
     inputStyle: "contenteditable",
-    lineNumberFormatter: function(line){return('<span> line </span>' + line);}
+    tabSize: 1,
+    // tabMode: "indent",
+    lineNumberFormatter: function(line){return('ln' + line);}
   });
 
   isTextArea = 0;
@@ -35,22 +37,22 @@ window.onload = function(){
   //add content editable to the parent class - 'CodeMirror-lines'
   // document.getElementsByClassName('CodeMirror-lines')[0].contentEditable = true;
 
-  // var textarea = document.getElementById('codemirror-test');
-  // textarea.addEventListener('keydown',function(e){
-  //   addLineNum(e)
-  //   }
-  // );
+  var textarea = document.getElementById('codemirror-test');
+  textarea.addEventListener('keydown',function(e){
+    addLineNum(e)
+    }
+  );
 
 
 }
 
-/******* ADDED EDITOR FUNCTIONALITES *********/
-
-myCodeMirror.setOption("extraKeys", {
-  'Ctrl-L': function(cm) {
-    document.getElementById('noOfLines').innerHTML = 'no of lines - ' + myCodeMirror.lineCount();
-  }
-});
+// /******* ADDED EDITOR FUNCTIONALITES *********/
+//
+// myCodeMirror.setOption("extraKeys", {
+//   'Ctrl-L': function(cm) {
+//     document.getElementById('noOfLines').innerHTML = 'no of lines - ' + myCodeMirror.lineCount();
+//   }
+// });
 
 /******* UTILITIES *********/
 
@@ -88,15 +90,19 @@ function switchToText() {
       lineNumbers: true,
       theme: document.getElementById('ideTheme').value,
       autoCloseBrackets: true,
-      inputStyle: "contenteditable"
+      inputStyle: "contenteditable",
+      tabSize: 20,
+      // tabMode: "indent",
+      lineNumberFormatter: function(line){return('ln' + line);}
     });
+
     isTextArea = 0;
   }
 
 }
 
 function addLineNum(e) {
-  if(e.keyCode) {
+  if(e.keyCode===13) {
     console.log('this is Enter');
     var textTemp = document.getElementsByClassName('textarea')[0];
      document.getElementById('codemirror-test').innerHTML = document.getElementById('codemirror-test').value;
