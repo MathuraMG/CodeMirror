@@ -4,7 +4,7 @@ var App = (function() {
     this.isLightTheme = true;
     this.fontSizeSelector = document.getElementById('fontSize');
     this.themeSelector = document.getElementById('ideTheme');
-    this.codeMirror = CodeMirror(document.body, {
+    this.codeMirror = CodeMirror(document.getElementById('cmContainer'), {
       value: 'console.log(\'potato\')\;\n',
       mode:  "javascript",
       lineNumbers: true,
