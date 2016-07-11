@@ -6,11 +6,11 @@ var App = (function() {
     this.themeSelector = document.getElementById('ideTheme');
     this.codeMirror = CodeMirror(document.getElementById('cmContainer'), {
       value: 'console.log(\'potato\')\;\n',
-      mode:  "javascript",
+      mode:  'javascript',
       lineNumbers: true,
-      theme: "3024-day",
+      theme: 'cobalt',
       autoCloseBrackets: true,
-      inputStyle: "contenteditable"
+      inputStyle: 'contenteditable'
     });
 
     // these will be set in the init() function
@@ -35,7 +35,7 @@ var App = (function() {
     });
 
     self.bindHandlers();
-    self.codeMirror.setOption('theme', 'cobalt');
+    // self.codeMirror.setOption('theme', 'cobalt');
   };
 
   App.prototype.bindHandlers = function() {
