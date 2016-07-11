@@ -35,7 +35,6 @@ var App = (function() {
     });
 
     self.bindHandlers();
-    // self.codeMirror.setOption('theme', 'cobalt');
   };
 
   App.prototype.bindHandlers = function() {
@@ -43,8 +42,7 @@ var App = (function() {
 
     // The functions below are being bound to
     // DOM elements, so in their scope 'this' will 
-    // refer to the element itself, while 'self' 
-    // refers to our instance of this App; within
+    // refer to the element itself; within
     // the event handlers, we will refer to the 
     // global 'app' variable. A little weird
     // but it works ¯\_(ツ)_/¯
