@@ -30,7 +30,7 @@ var App = (function() {
 
     self.codeMirror.setOption("extraKeys", {
       'Ctrl-L': function(cm) {
-        document.getElementById('noOfLines').innerHTML = 'no of lines - ' + myCodeMirror.lineCount();
+        document.getElementById('noOfLines').innerHTML = 'no of lines - ' + self.codeMirror.lineCount();
       }
     });
 
