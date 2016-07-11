@@ -1,60 +1,78 @@
-var isLightTheme = 1;
+var App = (function() {
 
-var myCodeMirror = CodeMirror(document.body, {
-  value: "console.log('potato')\n",
-  mode:  "javascript",
-  lineNumbers: true,
-  theme: "3024-day",
-  autoCloseBrackets: true,
-  inputStyle: "contenteditable"
-});
+  var App = function() {
+    this.isLightTheme = true;
+    this.fontSizeSelector = document.getElementById('fontSize');
+    this.themeSelector = document.getElementById('ideTheme');
+    this.codeMirror = CodeMirror(document.body, {
+      value: 'console.log(\'potato\')\;\n',
+      mode:  "javascript",
+      lineNumbers: true,
+      theme: "3024-day",
+      autoCloseBrackets: true,
+      inputStyle: "contenteditable"
+    });
 
-// let's save this as a globally accessible variable in case we need it for more custom style functions
-var cmWrapperElement = myCodeMirror.getWrapperElement();
+    // these will be set in the init() function
+    this.codeArea = null;
+    this.cmWrapperElement = null;
 
-// debugger;
+    this.init();
+  };
 
-codeArea =document.getElementsByClassName('CodeMirror')[0];
-codeArea.addEventListener("keyup", function() {
-  // console.log('changing the value');
-  eval(myCodeMirror.doc.getValue());
-})
-window.onload = function(){
+  App.prototype.constructor = App;
 
-  setIDETheme();
+  App.prototype.init = function() {
+    var self = this;
 
-  //add content editable to the parent class - 'CodeMirror-lines'
-  // document.getElementsByClassName('CodeMirror-lines')[0].contentEditable = true;
+    self.codeArea = document.getElementsByClassName('CodeMirror')[0];
+    self.cmWrapperElement = self.codeMirror.getWrapperElement();
 
-}
+    self.codeMirror.setOption("extraKeys", {
+      'Ctrl-L': function(cm) {
+        document.getElementById('noOfLines').innerHTML = 'no of lines - ' + myCodeMirror.lineCount();
+      }
+    });
 
-/******* ADDED EDITOR FUNCTIONALITES *********/
+    self.bindHandlers();
+    self.codeMirror.setOption('theme', 'cobalt');
+  };
 
-myCodeMirror.setOption("extraKeys", {
-  'Ctrl-L': function(cm) {
-    document.getElementById('noOfLines').innerHTML = 'no of lines - ' + myCodeMirror.lineCount();
-  }
-});
+  App.prototype.bindHandlers = function() {
+    var self = this;
 
-/******* UTILITIES *********/
+    // The functions below are being bound to
+    // DOM elements, so in their scope 'this' will 
+    // refer to the element itself, while 'self' 
+    // refers to our instance of this App; within
+    // the event handlers, we will refer to the 
+    // global 'app' variable. A little weird
+    // but it works ¯\_(ツ)_/¯
 
-function toggleTheme() {
-  if(isLightTheme == 1) {
-    myCodeMirror.setOption('theme','3024-night');
-    isLightTheme = 0;
-  }
-  else {
-    myCodeMirror.setOption('theme','3024-day');
-    isLightTheme = 1;
-  }
-}
+    var keyup = function() {
+      var value = app.codeMirror.doc.getValue();
+      eval(value);
+    };
 
-function setFontSize() {
-  var fontSize = document.getElementById('fontSize').value;
-  cmWrapperElement.style['font-size'] = fontSize;
-}
+    var setFontSize = function() {
+      var fontSize = this.value;
+      app.cmWrapperElement.style['font-size'] = fontSize;
+    };
 
-function setIDETheme() {
-  var selTheme = document.getElementById('ideTheme').value;
-  myCodeMirror.setOption('theme',selTheme);
-}
+    var setTheme = function() {
+      var theme = this.value;
+      app.codeMirror.setOption('theme', theme);
+    };
+
+    self.codeArea.addEventListener('keyup', keyup);
+    self.fontSizeSelector.addEventListener('change', setFontSize);
+    self.themeSelector.addEventListener('change', setTheme);
+  };
+
+  return App;
+})();
+
+var app;
+window.onload = function() {
+  app = new App();
+};

@@ -21,12 +21,11 @@
     <h1>
       Code Mirror Test
     </h1>
-    <script src="app.js"></script>
     <!-- To select between themes  -->
 
     <div class="ideThemeSelect">
       <label for="ideTheme">Select Theme</label>
-      <select id="ideTheme" onChange="setIDETheme()">
+      <select id="ideTheme">
         <option value="midnight">midnight</option>
         <option value="eclipse">eclipse</option>
         <option value="cobalt" selected>cobalt</option>
@@ -36,7 +35,7 @@
 
     <div class="fontSelect">
       <label for="fontSize">Set Font Size</label>
-      <select id="fontSize" onChange="setFontSize()">
+      <select id="fontSize">
         <option value="6px">6px</option>
         <option value="7px">7px</option>
         <option value="8px">8px</option>
@@ -62,5 +61,6 @@
     </div>
     
     <!-- <div id="noOfLines" aria-live="assertive" > no Of lines - 10 </div> -->
+    <script src="app.js"></script>
   </body>
 </html>
