@@ -37,8 +37,6 @@ var App = (function() {
     });
 
     self.bindHandlers();
-
-    console.log(self.codeMirror.options.lintWith);
   };
 
   App.prototype.bindHandlers = function() {
@@ -51,11 +49,6 @@ var App = (function() {
     // global 'app' variable. A little weird
     // but it works ¯\_(ツ)_/¯
 
-    var keyup = function() {
-      var value = app.codeMirror.doc.getValue();
-      eval(value);
-    };
-
     var setFontSize = function() {
       var fontSize = this.value;
       app.cmWrapperElement.style['font-size'] = fontSize;
@@ -67,12 +60,32 @@ var App = (function() {
     };
 
     var lintCheck = function() {
-      app.codeMirror.setOption('lint', true);
+      var success = JSHINT(app.codeMirror.doc.getValue()),
+        output = '';
+
+      if (!success) {
+        output = 'Check format error:\n\n';
+
+        var errors = JSHINT.errors;
+        for (var i in errors) {
+          var err = errors[i];
+
+          if (err != null) {
+            output += err.line + '[' + err.character + ']: ' + err.reason + '\n';
+          } else {
+            output += 'Check format unknown error:\n';
+          }
+        }
+
+        alert(output);
+      }
+
+      return success;
     };
 
-    self.codeArea.addEventListener('keyup', keyup);
     self.fontSizeSelector.addEventListener('change', setFontSize);
     self.themeSelector.addEventListener('change', setTheme);
+    self.lintCheckButton.addEventListener('click', lintCheck);
   };
 
   return App;
