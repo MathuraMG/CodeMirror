@@ -1,16 +1,18 @@
 var App = (function() {
 
   var App = function() {
-    this.isLightTheme = true;
     this.fontSizeSelector = document.getElementById('fontSize');
     this.themeSelector = document.getElementById('ideTheme');
+    this.lintCheckButton = document.getElementById('lintCheck');
     this.codeMirror = CodeMirror(document.getElementById('cmContainer'), {
       value: 'console.log(\'potato\')\;\n',
       mode:  'javascript',
       lineNumbers: true,
+      gutters: ['CodeMirror-lint-markers'],
       theme: 'cobalt',
       autoCloseBrackets: true,
-      inputStyle: 'contenteditable'
+      inputStyle: 'contenteditable' //,
+      // lint: true
     });
 
     // these will be set in the init() function
@@ -35,6 +37,8 @@ var App = (function() {
     });
 
     self.bindHandlers();
+
+    console.log(self.codeMirror.options.lintWith);
   };
 
   App.prototype.bindHandlers = function() {
@@ -60,6 +64,10 @@ var App = (function() {
     var setTheme = function() {
       var theme = this.value;
       app.codeMirror.setOption('theme', theme);
+    };
+
+    var lintCheck = function() {
+      app.codeMirror.setOption('lint', true);
     };
 
     self.codeArea.addEventListener('keyup', keyup);
