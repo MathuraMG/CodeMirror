@@ -11,8 +11,8 @@ var App = (function() {
       gutters: ['CodeMirror-lint-markers'],
       theme: 'cobalt',
       autoCloseBrackets: true,
-      inputStyle: 'contenteditable' //,
-      // lint: true
+      inputStyle: 'contenteditable',
+      lint: true
     });
 
     // these will be set in the init() function
