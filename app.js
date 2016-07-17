@@ -1,16 +1,18 @@
 var App = (function() {
 
   var App = function() {
-    this.isLightTheme = true;
     this.fontSizeSelector = document.getElementById('fontSize');
     this.themeSelector = document.getElementById('ideTheme');
+    this.runButton = document.getElementById('runCode');
     this.codeMirror = CodeMirror(document.getElementById('cmContainer'), {
       value: 'console.log(\'potato\')\;\n',
       mode:  'javascript',
       lineNumbers: true,
+      gutters: ['CodeMirror-lint-markers'],
       theme: 'cobalt',
       autoCloseBrackets: true,
-      inputStyle: 'contenteditable'
+      inputStyle: 'contenteditable',
+      lint: true
     });
 
     // these will be set in the init() function
@@ -47,11 +49,6 @@ var App = (function() {
     // global 'app' variable. A little weird
     // but it works ¯\_(ツ)_/¯
 
-    var keyup = function() {
-      var value = app.codeMirror.doc.getValue();
-      eval(value);
-    };
-
     var setFontSize = function() {
       var fontSize = this.value;
       app.cmWrapperElement.style['font-size'] = fontSize;
@@ -62,9 +59,36 @@ var App = (function() {
       app.codeMirror.setOption('theme', theme);
     };
 
-    self.codeArea.addEventListener('keyup', keyup);
+    var checkAndRun = function() {
+      var _value = app.codeMirror.doc.getValue(), 
+        success = JSHINT(_value),
+        output = '';
+
+      if (!success) {
+        output = 'Check format error:\n\n';
+
+        var errors = JSHINT.errors;
+        for (var i in errors) {
+          var err = errors[i];
+
+          if (err != null) {
+            output += err.line + '[' + err.character + ']: ' + err.reason + '\n';
+          } else {
+            output += 'Check format unknown error:\n';
+          }
+        }
+
+        alert(output);
+      } else {
+        eval(_value);
+      }
+
+      return success;
+    };
+
     self.fontSizeSelector.addEventListener('change', setFontSize);
     self.themeSelector.addEventListener('change', setTheme);
+    self.runButton.addEventListener('click', checkAndRun);
   };
 
   return App;
