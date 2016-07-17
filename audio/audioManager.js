@@ -21,12 +21,12 @@ var AudioManager = (function() {
 
 		self.context = new contextClass();
 
-		self.output = self.context.createGainNode();
+		self.output = self.context.createGain();
 		self.output.connect(self.context.destination);
 
 		self.oscillator = self.context.createOscillator();
 		self.oscillator.type = 'square';
-		self.oscillator.frequency = 300;
+		self.oscillator.frequency = 40;
 		self.oscillator.connect(self.output);
 	};
 

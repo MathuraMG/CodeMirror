@@ -14,6 +14,7 @@ var App = (function() {
       inputStyle: 'contenteditable',
       lint: true
     });
+    this.audioManager = new AudioManager();
 
     // these will be set in the init() function
     this.codeArea = null;
