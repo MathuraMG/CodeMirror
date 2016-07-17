@@ -3,7 +3,7 @@ var App = (function() {
   var App = function() {
     this.fontSizeSelector = document.getElementById('fontSize');
     this.themeSelector = document.getElementById('ideTheme');
-    this.lintCheckButton = document.getElementById('lintCheck');
+    this.runButton = document.getElementById('runCode');
     this.codeMirror = CodeMirror(document.getElementById('cmContainer'), {
       value: 'console.log(\'potato\')\;\n',
       mode:  'javascript',
@@ -59,8 +59,9 @@ var App = (function() {
       app.codeMirror.setOption('theme', theme);
     };
 
-    var lintCheck = function() {
-      var success = JSHINT(app.codeMirror.doc.getValue()),
+    var checkAndRun = function() {
+      var _value = app.codeMirror.doc.getValue(), 
+        success = JSHINT(_value),
         output = '';
 
       if (!success) {
@@ -78,6 +79,8 @@ var App = (function() {
         }
 
         alert(output);
+      } else {
+        eval(_value);
       }
 
       return success;
@@ -85,7 +88,7 @@ var App = (function() {
 
     self.fontSizeSelector.addEventListener('change', setFontSize);
     self.themeSelector.addEventListener('change', setTheme);
-    self.lintCheckButton.addEventListener('click', lintCheck);
+    self.runButton.addEventListener('click', checkAndRun);
   };
 
   return App;
