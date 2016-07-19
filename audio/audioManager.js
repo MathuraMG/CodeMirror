@@ -22,13 +22,29 @@ var AudioManager = (function() {
 		self.context = new contextClass();
 
 		self.output = self.context.createGain();
+		self.output.gain.setValueAtTime(0, self.context.currentTime);
 		self.output.connect(self.context.destination);
 
 		self.oscillator = self.context.createOscillator();
 		self.oscillator.type = 'square';
-		self.oscillator.frequency = 40;
+		self.oscillator.frequency.setValueAtTime(50, self.context.currentTime);
 		self.oscillator.connect(self.output);
+		self.oscillator.start();
 	};
+
+	AudioManager.prototype.alert = function(level, interval) {
+		var self = this,
+			t = self.context.currentTime;
+
+		self.output.gain.cancelScheduledValues(t);
+		self.output.gain.setValueAtTime(level, t);
+		t += interval;
+		self.output.gain.setValueAtTime(0, t);
+		t += interval;
+		self.output.gain.setValueAtTime(level, t);
+		t += interval;
+		self.output.gain.setValueAtTime(0, t);
+	}
 
 	return AudioManager;
 })();

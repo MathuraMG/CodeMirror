@@ -43,29 +43,23 @@ var App = (function() {
   App.prototype.bindHandlers = function() {
     var self = this;
 
-    // The functions below are being bound to
-    // DOM elements, so in their scope 'this' will 
-    // refer to the element itself; within
-    // the event handlers, we will refer to the 
-    // global 'app' variable. A little weird
-    // but it works ¯\_(ツ)_/¯
-
-    var setFontSize = function() {
-      var fontSize = this.value;
-      app.cmWrapperElement.style['font-size'] = fontSize;
+    var setFontSize = function(event) {
+      var fontSize = event.target.value;
+      self.cmWrapperElement.style['font-size'] = fontSize;
     };
 
-    var setTheme = function() {
-      var theme = this.value;
-      app.codeMirror.setOption('theme', theme);
+    var setTheme = function(event) {
+      var theme = event.target.value;
+      self.codeMirror.setOption('theme', theme);
     };
 
     var checkAndRun = function() {
-      var _value = app.codeMirror.doc.getValue(), 
+      var _value = self.codeMirror.doc.getValue(), 
         success = JSHINT(_value),
         output = '';
 
       if (!success) {
+        self.audioManager.alert(0.3, 0.06);
         output = 'Check format error:\n\n';
 
         var errors = JSHINT.errors;
