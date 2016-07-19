@@ -5,7 +5,7 @@ var App = (function() {
     this.themeSelector = document.getElementById('ideTheme');
     this.runButton = document.getElementById('runCode');
     this.codeMirror = CodeMirror(document.getElementById('cmContainer'), {
-      value: 'console.log(\'potato\')\;\n',
+      value: 'var foo = \'foo\'\n\nconsole.log(foo);',
       mode:  'javascript',
       lineNumbers: true,
       gutters: ['CodeMirror-lint-markers'],
