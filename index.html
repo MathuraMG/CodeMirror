@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>CodeMirror</title>
-    <script src="lib/codemirror.js"></script>
     <link rel="stylesheet" href="lib/codemirror.css">
     <link rel="stylesheet" href="theme/3024-day.css">
     <link rel="stylesheet" href="theme/3024-night.css">
@@ -11,10 +10,16 @@
     <link rel="stylesheet" href="theme/eclipse.css">
     <link rel="stylesheet" href="theme/cobalt.css">
     <link rel="stylesheet" href="theme/monokai.css">
+    <link rel="stylesheet" href="addon/lint/lint.css">
     <link rel="stylesheet" href="style.css">
+
+    <script src="lib/codemirror.js"></script>
     <script src="mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="vendor/jshint.js"></script>
     <script src="keymap/vim.js"></script>
     <script src="addon/edit/closebrackets.js"></script>
+    <script src-"addon/lint/lint.js"></script>
+    <script src="addon/lint/javascript-lint.js"></script>
   </head>
 
   <body style='font-size: 14px;'>
@@ -61,8 +66,13 @@
         <option value="72px">72px</option>
       </select>
     </div>
+
+    <div>
+        <button id="runCode">Run Code</button>
+    </div>
     
     <!-- <div id="noOfLines" aria-live="assertive" > no Of lines - 10 </div> -->
+    <script src="audio/audioManager.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

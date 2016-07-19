@@ -1,17 +1,20 @@
 var App = (function() {
 
   var App = function() {
-    this.isLightTheme = true;
     this.fontSizeSelector = document.getElementById('fontSize');
     this.themeSelector = document.getElementById('ideTheme');
+    this.runButton = document.getElementById('runCode');
     this.codeMirror = CodeMirror(document.getElementById('cmContainer'), {
-      value: 'console.log(\'potato\')\;\n',
+      value: 'var foo = \'foo\'\n\nconsole.log(foo);',
       mode:  'javascript',
       lineNumbers: true,
+      gutters: ['CodeMirror-lint-markers'],
       theme: 'cobalt',
       autoCloseBrackets: true,
-      inputStyle: 'contenteditable'
+      inputStyle: 'contenteditable',
+      lint: true
     });
+    this.audioManager = new AudioManager();
 
     // these will be set in the init() function
     this.codeArea = null;
@@ -40,31 +43,47 @@ var App = (function() {
   App.prototype.bindHandlers = function() {
     var self = this;
 
-    // The functions below are being bound to
-    // DOM elements, so in their scope 'this' will 
-    // refer to the element itself; within
-    // the event handlers, we will refer to the 
-    // global 'app' variable. A little weird
-    // but it works ¯\_(ツ)_/¯
-
-    var keyup = function() {
-      var value = app.codeMirror.doc.getValue();
-      eval(value);
+    var setFontSize = function(event) {
+      var fontSize = event.target.value;
+      self.cmWrapperElement.style['font-size'] = fontSize;
     };
 
-    var setFontSize = function() {
-      var fontSize = this.value;
-      app.cmWrapperElement.style['font-size'] = fontSize;
+    var setTheme = function(event) {
+      var theme = event.target.value;
+      self.codeMirror.setOption('theme', theme);
     };
 
-    var setTheme = function() {
-      var theme = this.value;
-      app.codeMirror.setOption('theme', theme);
+    var checkAndRun = function() {
+      var _value = self.codeMirror.doc.getValue(), 
+        success = JSHINT(_value),
+        output = '';
+
+      if (!success) {
+        self.audioManager.alert(0.3, 0.06);
+        output = 'Check format error:\n\n';
+
+        var errors = JSHINT.errors;
+        for (var i in errors) {
+          var err = errors[i];
+
+          if (err != null) {
+            output += err.line + '[' + err.character + ']: ' + err.reason + '\n';
+          } else {
+            output += 'Check format unknown error:\n';
+          }
+        }
+
+        alert(output);
+      } else {
+        eval(_value);
+      }
+
+      return success;
     };
 
-    self.codeArea.addEventListener('keyup', keyup);
     self.fontSizeSelector.addEventListener('change', setFontSize);
     self.themeSelector.addEventListener('change', setTheme);
+    self.runButton.addEventListener('click', checkAndRun);
   };
 
   return App;
