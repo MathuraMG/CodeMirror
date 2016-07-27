@@ -28,7 +28,7 @@
     <button onClick="switchToText()">switch to text area</button>
     <script src="app.js"></script>
     <!-- To select between themes  -->
-    <div id="overall-editor" onkeyup="testFn(document.getElementById('lineNo'));">
+    <div id="overall-editor" onkeyup="if(isTextArea==0) { testFn(document.getElementById('lineNo')); }">
       <textarea class="lined" id="codemirror-test" onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();">
 function sayHello() {
   console.log('hello !');
@@ -42,7 +42,7 @@ sayHello();
 
     <script>
         function getLineNumber(textarea, indicator) {
-            indicator.innerHTML = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
+            indicator.innerHTML = 'line - ' + textarea.value.substr(0, textarea.selectionStart).split("\n").length;
         }
         function testFn(indicator) {
           indicator.innerHTML = 'line - ' + parseInt(parseInt(myCodeMirror.getCursor().line)+1);

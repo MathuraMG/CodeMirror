@@ -14,7 +14,7 @@ window.onload = function(){
     lineNumbers: true,
     theme: "3024-day",
     autoCloseBrackets: true,
-    inputStyle: "contenteditable",
+    inputStyle: "contenteditable"
     // lineNumberFormatter: function(line){return('ln' + line);}
   });
 
