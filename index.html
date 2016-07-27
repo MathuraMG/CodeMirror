@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="style.css">
     <script src="mode/javascript/javascript.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="jquery-linedtextarea.js"></script>
+    <link href="jquery-linedtextarea.css" type="text/css" rel="stylesheet" />
     <script src="keymap/vim.js"></script>
     <script src="addon/edit/closebrackets.js"></script>
   </head>
@@ -26,9 +28,21 @@
     <script src="app.js"></script>
     <!-- To select between themes  -->
 
-    <textarea id="codemirror-test" class="lined">
-      console.log('apples');
+    <textarea class="lined" id="codemirror-test" onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();">
+function sayHello() {
+  console.log('hello !');
+}
+//calling the function
+sayHello();
     </textarea>
+
+    <div id="lineNo" role='region' aria-live='assertive'></div>
+
+    <script>
+        function getLineNumber(textarea, indicator) {
+            indicator.innerHTML = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
+        }
+    </script>
     <script>
     $(function() {
     	$(".lined").linedtextarea(
@@ -40,9 +54,9 @@
     <div class="ideThemeSelect">
       <label for="ideTheme">Select Theme</label>
       <select id="ideTheme" onChange="setIDETheme()">
-        <option value="midnight">midnight</option>
+        <option value="midnight" selected>midnight</option>
         <option value="eclipse">eclipse</option>
-        <option value="cobalt" selected>cobalt</option>
+        <option value="cobalt">cobalt</option>
         <option value="monokai">monokai</option>
       </select>
     </div>

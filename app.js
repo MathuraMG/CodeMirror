@@ -10,15 +10,12 @@ var cmWrapperElement;
 window.onload = function(){
 
   myCodeMirror = CodeMirror.fromTextArea(document.getElementById('codemirror-test'), {
-    value: "console.log('potato')\n",
     mode:  "javascript",
     lineNumbers: true,
     theme: "3024-day",
     autoCloseBrackets: true,
     inputStyle: "contenteditable",
-    tabSize: 1,
-    // tabMode: "indent",
-    lineNumberFormatter: function(line){return('ln' + line);}
+    // lineNumberFormatter: function(line){return('ln' + line);}
   });
 
   isTextArea = 0;
@@ -27,23 +24,11 @@ window.onload = function(){
 
   codeArea =document.getElementsByClassName('CodeMirror')[0];
   codeArea.addEventListener("keyup", function() {
-    // debugger;
-    // console.log('changing the value');
     eval(myCodeMirror.doc.getValue());
-    // eval(textAreaCM.doc.getValue());
   })
 
   setIDETheme();
-
-  //add content editable to the parent class - 'CodeMirror-lines'
-  // document.getElementsByClassName('CodeMirror-lines')[0].contentEditable = true;
-
   var textarea = document.getElementById('codemirror-test');
-  // textarea.addEventListener('keydown',function(e){
-  //   addLineNum(e)
-  //   }
-  // );
-
 }
 
 // /******* ADDED EDITOR FUNCTIONALITES *********/
@@ -67,16 +52,6 @@ function toggleTheme() {
   }
 }
 
-function modifyLineNos() {
-  console.log('inside modify line numbers');
-  var lineNos = document.getElementsByClassName("CodeMirror-linenumber");
-  for(var i=0;i<lineNos.length;i++) {
-    lineNos[i].tabIndex = 0;
-    console.log('testing - ' + i);
-    lineNos[i].title = 'machiii';
-  }
-}
-
 function setFontSize() {
   var fontSize = document.getElementById('fontSize').value;
   cmWrapperElement.style['font-size'] = fontSize;
@@ -91,8 +66,10 @@ function switchToText() {
   if(isTextArea === 0 ){
     console.log('switch to text area');
     myCodeMirror.toTextArea();
-    isTextArea = 1;;
+    isTextArea = 1;
     document.getElementsByClassName('lines')[0].style.display = 'block';
+    document.getElementsByClassName('lines')[0].tabindex = -1;
+    document.getElementsByClassName('line')[0].tabindex = -1;
   }
   else {
     console.log('switch to codemirror area');
@@ -102,33 +79,10 @@ function switchToText() {
       theme: document.getElementById('ideTheme').value,
       autoCloseBrackets: true,
       inputStyle: "contenteditable",
-      tabSize: 20,
       // tabMode: "indent",
-      lineNumberFormatter: function(line){return('ln' + line);}
+      // lineNumberFormatter: function(line){return('ln' + line);}
     });
     isTextArea = 0;
-    modifyLineNos();
     document.getElementsByClassName('lines')[0].style.display = 'none';
-  }
-
-}
-
-function addLineNum(e) {
-  if(e.keyCode===13) {
-    console.log('this is Enter');
-    var textTemp = document.getElementsByClassName('textarea')[0];
-     document.getElementById('codemirror-test').innerHTML = document.getElementById('codemirror-test').value;
-     var temp = document.getElementById('codemirror-test').innerHTML;
-     temp = temp.split('\n');
-    //  textTemp.innerHTML = '';
-     for(var i =0;i<temp.length;i++){
-       var tempLineDiv = document.createElement('div');
-       tempLineDiv.innerHTML = i+1;
-       textTemp.appendChild(tempLineDiv);
-       var tempDiv = document.createElement('div');
-       tempDiv.innerHTML = temp[i];
-       textTemp.appendChild(tempDiv);
-       tempDiv.tabIndex = 0;
-     }
   }
 }
