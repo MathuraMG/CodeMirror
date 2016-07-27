@@ -18,6 +18,7 @@
     <link href="jquery-linedtextarea.css" type="text/css" rel="stylesheet" />
     <script src="keymap/vim.js"></script>
     <script src="addon/edit/closebrackets.js"></script>
+    <script src="addon/search/jump-to-line.js"></script>
   </head>
 
   <body style='font-size: 14px;'>
@@ -27,20 +28,24 @@
     <button onClick="switchToText()">switch to text area</button>
     <script src="app.js"></script>
     <!-- To select between themes  -->
-
-    <textarea class="lined" id="codemirror-test" onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();">
+    <div id="overall-editor" onkeyup="testFn(document.getElementById('lineNo'));">
+      <textarea class="lined" id="codemirror-test" onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();">
 function sayHello() {
   console.log('hello !');
 }
 //calling the function
 sayHello();
-    </textarea>
+      </textarea>
+    </div>
 
     <div id="lineNo" role='region' aria-live='assertive'></div>
 
     <script>
         function getLineNumber(textarea, indicator) {
             indicator.innerHTML = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
+        }
+        function testFn(indicator) {
+          indicator.innerHTML = 'line - ' + parseInt(parseInt(myCodeMirror.getCursor().line)+1);
         }
     </script>
     <script>
