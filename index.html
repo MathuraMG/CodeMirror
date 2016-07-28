@@ -29,7 +29,7 @@
     <script src="app.js"></script>
     <!-- To select between themes  -->
     <div id="overall-editor" onkeyup="if(isTextArea==0) { testFn(document.getElementById('lineNo')); }">
-      <textarea class="lined" id="codemirror-test" onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();">
+      <textarea class="lined" rows="15" id="codemirror-test" onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();">
 function sayHello() {
   console.log('hello !');
 }
@@ -38,7 +38,7 @@ sayHello();
       </textarea>
     </div>
 
-    <div id="lineNo" role='region' aria-live='assertive'></div>
+    <div id="lineNo" role='region' aria-live='polite'></div>
 
     <script>
         function getLineNumber(textarea, indicator) {

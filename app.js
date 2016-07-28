@@ -69,7 +69,6 @@ function switchToText() {
     isTextArea = 1;
     document.getElementsByClassName('lines')[0].style.display = 'block';
     document.getElementsByClassName('lines')[0].tabindex = -1;
-    document.getElementsByClassName('line')[0].tabindex = -1;
   }
   else {
     console.log('switch to codemirror area');
