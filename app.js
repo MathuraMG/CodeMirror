@@ -71,6 +71,7 @@ var App = (function() {
         self.codeMirror.toTextArea();
         self.isTextArea = 1;
         document.getElementsByClassName('lines')[0].style.display = 'block';
+        document.getElementsByClassName('lines')[0].setAttribute('aria-hidden','true');
         document.getElementsByClassName('lines')[0].tabindex = -1;
         self.textareaSelector.innerHTML = 'switch to codemirror';
       }
