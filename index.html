@@ -25,11 +25,11 @@
     <h1>
       Code Mirror Test
     </h1>
-    <button onClick="switchToText()">switch to text area</button>
-    <script src="app.js"></script>
+
+    <button id="textareaSelector">switch to text area</button>
     <!-- To select between themes  -->
-    <div id="overall-editor" onkeyup="if(isTextArea==0) { testFn(document.getElementById('lineNo')); }">
-      <textarea class="lined" rows="15" id="codemirror-test" onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();">
+    <div id="overall-editor">
+      <textarea class="lined" rows="15" id="codemirror-text">
 function sayHello() {
   console.log('hello !');
 }
@@ -38,7 +38,7 @@ sayHello();
       </textarea>
     </div>
 
-    <div id="lineNo" role='region' aria-live='polite'></div>
+    <div id="lineNo" role='region' aria-live='assertive'></div>
 
     <script>
         function getLineNumber(textarea, indicator) {
@@ -56,9 +56,11 @@ sayHello();
     });
     </script>
 
+    <div id="cmContainer"></div>
+
     <div class="ideThemeSelect">
       <label for="ideTheme">Select Theme</label>
-      <select id="ideTheme" onChange="setIDETheme()">
+      <select id="ideTheme">
         <option value="midnight" selected>midnight</option>
         <option value="eclipse">eclipse</option>
         <option value="cobalt">cobalt</option>
@@ -68,7 +70,7 @@ sayHello();
 
     <div class="fontSelect">
       <label for="fontSize">Set Font Size</label>
-      <select id="fontSize" onChange="setFontSize()">
+      <select id="fontSize">
         <option value="6px">6px</option>
         <option value="7px">7px</option>
         <option value="8px">8px</option>
@@ -94,5 +96,6 @@ sayHello();
     </div>
 
     <!-- <div id="noOfLines" aria-live="assertive" > no Of lines - 10 </div> -->
+    <script src="app.js"></script>
   </body>
 </html>
